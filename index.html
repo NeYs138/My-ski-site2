@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горнолыжные комплексы Пермского края — современный гид</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== СБРОС И БАЗА ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #eef2f7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== ШАПКА ===== */
+        header {
+            position: relative;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: #ffffff;
+            padding: 80px 20px 70px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Декоративные круги на фоне */
+        header::before,
+        header::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        header::before {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            left: -100px;
+        }
+
+        header::after {
+            width: 300px;
+            height: 300px;
+            bottom: -120px;
+            right: -80px;
+        }
+
+        header h1 {
+            position: relative;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            z-index: 1;
+        }
+
+        header p {
+            position: relative;
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            max-width: 720px;
+            margin: 0 auto;
+            opacity: 0.85;
+            font-weight: 400;
+            z-index: 1;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        main {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        /* ===== УВЕДОМЛЕНИЕ ===== */
+        .notice {
+            background: rgba(255, 251, 235, 0.9);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-left: 5px solid #f59e0b;
+            padding: 18px 24px;
+            margin-bottom: 50px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            color: #78350f;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ===== ЗАГОЛОВКИ ГРУПП ===== */
+        .group-title {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 800;
+            color: #0f2027;
+            margin: 60px 0 10px;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .group-title::before {
+            content: '';
+            width: 6px;
+            height: 28px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, #2c5364, #0f2027);
+        }
+
+        .group-desc {
+            margin-bottom: 32px;
+            color: #4a5568;
+            font-size: 0.95rem;
+            max-width: 820px;
+            line-height: 1.7;
+        }
+
+        /* ===== СЕТКА КАРТОЧЕК ===== */
+        .resort-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        /* ===== КАРТОЧКА ===== */
+        .resort-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(15, 32, 39, 0.07);
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resort-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(15, 32, 39, 0.15);
+        }
+
+        /* ===== ИЗОБРАЖЕНИЕ ===== */
+        .card-image {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #d1d9e6;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .resort-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        /* Плавный градиент поверх картинки, чтобы текст читался */
+        .card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(15, 32, 39, 0.45) 100%);
+            pointer-events: none;
+        }
+
+        /* ===== ШАПКА КАРТОЧКИ (ЦВЕТА ПО ГРУППАМ) ===== */
+        .card-header {
+            padding: 20px 22px 16px;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .card-header.heavy {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+        }
+
+        .card-header.near {
+            background: linear-gradient(135deg, #1e6091, #2980b9);
+        }
+
+        .card-header.cozy {
+            background: linear-gradient(135deg, #1e8449, #27ae60);
+        }
+
+        .card-header h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .card-header .tagline {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* ===== ТЕЛО КАРТОЧКИ ===== */
+        .card-body {
+            padding: 22px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .features li {
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(15, 32, 39, 0.06);
+            font-size: 0.9rem;
+            display: flex;
+            gap: 8px;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        .features strong {
+            color: #1e3c72;
+            font-weight: 700;
+            min-width: 110px;
+            flex-shrink: 0;
+        }
+
+        /* ===== ВЕРДИКТ ===== */
+        .verdict {
+            margin-top: auto;
+            padding: 14px 16px;
+            background: rgba(238, 242, 247, 0.8);
+            border-radius: 12px;
+            border-left: 4px solid rgba(15, 32, 39, 0.15);
+            font-size: 0.88rem;
+            font-style: italic;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #0f2027;
+            color: #94a3b8;
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 600px) {
+            header {
+                padding: 60px 16px 50px;
+            }
+
+            .resort-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+
+            .card-image {
+                height: 180px;
+            }
+
+            .features li {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .features strong {
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Горнолыжные комплексы Пермского края</h1>
+        <p>Современный гид: где кататься, сколько стоит ски-пасс, как с прокатом и что с едой. Выбирай по уровню и настроению.</p>
+    </header>
+
+    <main>
+        <div class="notice">
+            <strong>⚠️ Важно:</strong> Цены и условия указаны в ознакомительных целях на основе открытых данных сезона 2025–2026. Перед поездкой сверяйся с официальными группами и сайтами комплексов — тарифы могут меняться.
+        </div>
+
+        <!-- ========== ГРУППА 1: ПРОФИ ========== -->
+        <h2 class="group-title">Для опытных: масштаб и фрирайд</h2>
+        <p class="group-desc">Эти комплексы выбирают те, кто уже уверенно стоит на лыжах или сноуборде и хочет длинных трасс, перепада высот и разнообразия. Цены выше, но и впечатления того стоят.</p>
+
+        <div class="resort-grid">
+            <!-- ГУБАХА -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?w=800&q=80" alt="Горнолыжный курорт Губаха">
+                </div>
+                <div class="card-header heavy">
+                    <h2>«Губаха»</h2>
+                    <span class="tagline">Главный курорт края</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> 18 трасс (от зелёных до чёрных), самая длинная — 2600 м. Перепад до 310 м.</li>
+                        <li><strong>Ски-пасс:</strong> День: 2000–2500 ₽. 3 часа: 1200–1400 ₽.</li>
+                        <li><strong>Прокат:</strong> От 1500 ₽ за комплект.</li>
+                        <li><strong>Комфорт:</strong> Кресельный подъёмник, сноупарк, фрирайд, смотровая башня GU SKY TOWER.</li>
+                        <li><strong>Питание:</strong> Рестораны и кафе на вершине и у подножия.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Лучший выбор для тех, кто хочет «настоящую» гору. Самый большой выбор трасс и развитая инфраструктура.
+                    </div>
+                </div>
+            </article>
+
+            <!-- ТАКМАН -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1548777123-e216912df7d8?w=800&q=80" alt="Горнолыжный комплекс Такман">
+                </div>
+                <div class="card-header heavy">
+                    <h2>«Такман»</h2>
+                    <span class="tagline">Фрирайд и сложные трассы</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> 11 трасс, 4 зоны фрирайда. Самая длинная — 1200 м. Перепад 200 м.</li>
+                        <li><strong>Ски-пасс:</strong> День: ~1900 ₽. 3 часа в выходной: ~1400 ₽.</li>
+                        <li><strong>Прокат:</strong> От 1500 ₽ в день.</li>
+                        <li><strong>Комфорт:</strong> Инструкторы, прокат, бани, гостевые дома.</li>
+                        <li><strong>Питание:</strong> Кафе и бары на территории.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Отличный вариант для любителей фрирайда и тех, кто хочет попробовать что-то сложнее подготовленных склонов.
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- ========== ГРУППА 2: БЛИЖНИЙ КРУГ ========== -->
+        <h2 class="group-title">Рядом с Пермью: быстро и доступно</h2>
+        <p class="group-desc">Эти базы находятся в пределах 30–60 км от города. Идеальны для поездки на несколько часов или на день. Цены обычно ниже, чем на «тяжёлых» курортах.</p>
+
+        <div class="resort-grid">
+            <!-- БЕЛОГОРЬЕ -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?w=800&q=80" alt="Эко-курорт Белогорье">
+                </div>
+                <div class="card-header near">
+                    <h2>«Белогорье»</h2>
+                    <span class="tagline">Современный эко-курорт</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> 7 трасс (1000–1200 м), перепад 120–150 м.</li>
+                        <li><strong>Ски-пасс:</strong> Разовый подъём 230–300 ₽. 3 часа: 1000–1700 ₽.</li>
+                        <li><strong>Прокат:</strong> Есть, стоимость выше средней по региону.</li>
+                        <li><strong>Комфорт:</strong> Бугельный подъёмник, учебный склон, детский беби-лифт.</li>
+                        <li><strong>Питание:</strong> Ресторан «Амбар», кафе на территории.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Самое комфортное размещение и питание среди «ближних» курортов, но и ценник выше.
+                    </div>
+                </div>
+            </article>
+
+            <!-- ЖЕБРЕИ -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=800&q=80" alt="Горнолыжный комплекс Жебреи">
+                </div>
+                <div class="card-header near">
+                    <h2>«Жебреи»</h2>
+                    <span class="tagline">Популярная база под Пермью</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> 5 трасс с искусственным оснежением, общая длина 4100 м.</li>
+                        <li><strong>Ски-пасс:</strong> День: ~1200–1800 ₽. 1 час: ~400 ₽.</li>
+                        <li><strong>Прокат:</strong> Полный комплект: 1300–1800 ₽.</li>
+                        <li><strong>Комфорт:</strong> Бугельные подъёмники, учебный склон, сноупарк, инструкторы.</li>
+                        <li><strong>Питание:</strong> Два кафе с горячим питанием.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Универсальный вариант «на полдня». Близко, понятно, есть всё необходимое.
+                    </div>
+                </div>
+            </article>
+
+            <!-- ИВАН-ГОРА -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=800&q=80" alt="Горнолыжный комплекс Иван-гора">
+                </div>
+                <div class="card-header near">
+                    <h2>«Иван-гора»</h2>
+                    <span class="tagline">Лучший старт для новичка</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> 3 трассы (до 700 м), перепад 85 м. Пологие склоны для обучения.</li>
+                        <li><strong>Ски-пасс:</strong> День: ~1200–1300 ₽. 1 подъём: 100–150 ₽.</li>
+                        <li><strong>Прокат:</strong> От 800 ₽ — один из самых доступных.</li>
+                        <li><strong>Комфорт:</strong> Учебный склон, инструкторы, бугельные подъёмники.</li>
+                        <li><strong>Питание:</strong> Кафе.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Если ты едешь кататься впервые или хочешь недорого вспомнить основы — это отличное место.
+                    </div>
+                </div>
+            </article>
+
+            <!-- УВАЛ -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1610394219722-70f8a0e2a0a0?w=800&q=80" alt="Горнолыжная база Увал">
+                </div>
+                <div class="card-header near">
+                    <h2>«Увал»</h2>
+                    <span class="tagline">Демократично и по-лесному</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> 4 трассы, самая длинная — 420 м. Перепад 102 м. Катание по лесу.</li>
+                        <li><strong>Ски-пасс:</strong> Демократичные цены (уточнять на месте).</li>
+                        <li><strong>Прокат:</strong> Есть, цены ниже средних.</li>
+                        <li><strong>Комфорт:</strong> Бугельный подъёмник, два детских подъёмника.</li>
+                        <li><strong>Питание:</strong> Буфет.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Хороший вариант для тех, кто любит лес и не хочет переплачивать.
+                    </div>
+                </div>
+            </article>
+
+            <!-- ПОЛАЗНА -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1601581875039-e899893d520c?w=800&q=80" alt="Горнолыжный комплекс Полазна">
+                </div>
+                <div class="card-header near">
+                    <h2>«Полазна»</h2>
+                    <span class="tagline">Бюджетно и по-семейному</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> Склоны больше для детей и начинающих.</li>
+                        <li><strong>Ски-пасс:</strong> 4 часа: 500 ₽ (будни), 600 ₽ (выходные).</li>
+                        <li><strong>Прокат:</strong> Доступный, разнообразный ассортимент.</li>
+                        <li><strong>Комфорт:</strong> Хорошие инструкторы (особенно по сноуборду).</li>
+                        <li><strong>Питание:</strong> Кафе.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Один из самых недорогих вариантов, чтобы покататься несколько часов. Отлично для семей с детьми.
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- ========== ГРУППА 3: УЮТНЫЕ ========== -->
+        <h2 class="group-title">Уютные склоны: для семей и первых шагов</h2>
+        <p class="group-desc">Небольшие базы с дружелюбной атмосферой. Здесь не так многолюдно, как на раскрученных курортах, а цены часто приятнее.</p>
+
+        <div class="resort-grid">
+            <!-- ГЛУШАТА / ГОРА СНЕГА -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80" alt="Горнолыжная база Глушата">
+                </div>
+                <div class="card-header cozy">
+                    <h2>«Глушата» / «Гора снега»</h2>
+                    <span class="tagline">Две базы, одна атмосфера</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> Разнообразные трассы, учебные склоны, сноупарк.</li>
+                        <li><strong>Ски-пасс:</strong> Уточнять на месте, обычно на уровне «Иван-горы».</li>
+                        <li><strong>Прокат:</strong> Есть, цены средние по региону.</li>
+                        <li><strong>Комфорт:</strong> Дружелюбная атмосфера, инструкторы.</li>
+                        <li><strong>Питание:</strong> Кафе на территории.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Хорошая альтернатива «Иван-горе», если хочется попробовать что-то новое.
+                    </div>
+                </div>
+            </article>
+
+            <!-- ЕЛЬНИКИ -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1486078695445-0497c2f58cfe?w=800&q=80" alt="Горнолыжная база Ельники">
+                </div>
+                <div class="card-header cozy">
+                    <h2>«Ельники»</h2>
+                    <span class="tagline">Вкусная выпечка и учебный склон</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> Максимальная длина — 300 м. Несложный склон для первых шагов.</li>
+                        <li><strong>Ски-пасс:</strong> Подъём от 250 ₽.</li>
+                        <li><strong>Прокат:</strong> Горные лыжи от 600 ₽, сноуборд от 600 ₽.</li>
+                        <li><strong>Комфорт:</strong> Хорошая подготовка трассы, отзывчивый персонал.</li>
+                        <li><strong>Питание:</strong> Кафе с вкусной выпечкой.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Отличное «учебное» место. Если хочешь спокойно сделать первые шаги и потом согреться с булочкой — тебе сюда.
+                    </div>
+                </div>
+            </article>
+
+            <!-- МАЙСКАЯ ГОРА -->
+            <article class="resort-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80" alt="Горнолыжная база Майская гора">
+                </div>
+                <div class="card-header cozy">
+                    <h2>«Майская гора»</h2>
+                    <span class="tagline">Самый высокий рейтинг среди «малых»</span>
+                </div>
+                <div class="card-body">
+                    <ul class="features">
+                        <li><strong>Трассы:</strong> Склон, который высоко оценивают местные (рейтинг 4,9).</li>
+                        <li><strong>Ски-пасс:</strong> Демократичные цены (уточнять на месте).</li>
+                        <li><strong>Прокат:</strong> Есть.</li>
+                        <li><strong>Комфорт:</strong> Уютная атмосфера, подходит для семей.</li>
+                        <li><strong>Питание:</strong> Кафе.</li>
+                    </ul>
+                    <div class="verdict">
+                        <strong>Вердикт:</strong> Если хочешь попробовать что-то новое и не очень людное, но с хорошей репутацией — присмотрись.
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p>Учебный проект. Информация о ценах и услугах носит ознакомительный характер и требует проверки перед поездкой.</p>
+        <p>Данные собраны из открытых источников (2025–2026). Изображения — фотостоки, заменяются в атрибуте <code>src</code>.</p>
+    </footer>
+
+</body>
+</html>
